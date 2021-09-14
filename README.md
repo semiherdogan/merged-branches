@@ -14,7 +14,7 @@ __NOTE__: Before install this package, you should have `git` and `grep` installe
 
 * To see list of branches that merged into main branch and not deleted use example below:
 ```
-branch-merged main
+merged-branches main
 ```
 
 ## License
