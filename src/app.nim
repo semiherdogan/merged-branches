@@ -6,7 +6,7 @@ from sequtils import mapIt, filterIt
 from osproc import execProcess
 from os import getCurrentDir, dirExists, paramCount, paramStr
 
-let spinner = newSpinny("Loading..".fgWhite, Dots)
+let spinner = newSpinny("Loading..".fgWhite, Pipe)
 spinner.setSymbolColor(fgBlue)
 spinner.start()
 
