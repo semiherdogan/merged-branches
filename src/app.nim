@@ -1,24 +1,18 @@
-from terminaltables import newTerminalTable, printTable, addRow, setHeaders, suggestWidths
-from spinny import newSpinny, setSymbolColor, start, error, success, Dots,
-    fgLightGreen, fgGreen
-from algorithm import sortedByIt
-from strutils import split, strip, replace, toLowerAscii, toLower, contains
+from strutils import split, strip, toLower, contains
 from sequtils import mapIt, filterIt
 from osproc import execProcess
-from os import getCurrentDir, dirExists, paramCount, paramStr
-from helpers import replaceUnicodeCharacters
-from unicode import runeLen
+from os import dirExists, paramCount, paramStr
+from utils/replace_unicode_characters import replaceUnicodeCharacters
+from utils/spinner import spinnerStart, spinnerSuccess, spinnerError, spinnerText
+from utils/table import printBranchesTable, Branch
 
-# Initialize the spinny
-let spinner = newSpinny("Loading..".fgLightGreen, Dots)
-spinner.setSymbolColor(fgGreen)
-spinner.start()
+spinnerStart()
 
 if dirExists(".git/") == false:
-  spinner.error("Git repo NOT found")
+  spinnerError("Git repo NOT found")
   quit(QuitFailure)
 
-# get latest changes from git before starting
+spinnerText("Running 'git fetch'")
 discard execProcess("git fetch -qp")
 
 # get branch name as first argument
@@ -33,6 +27,7 @@ if paramCount() > 1:
 
 # gets branchname and branch author separated by "---"
 # Example: [myBranch---Semih ERDOGAN]
+spinnerText("Getting branch and author info")
 let branchAuthors = execProcess(
   "git for-each-ref --format=\"%(refname:strip=3)---%(authorname)\" --sort=authordate refs/remotes"
 )
@@ -42,6 +37,7 @@ let branchAuthors = execProcess(
 
 # get branch name and latest commit hash
 # Example: [5ce2envhd00cce33effa587ay2d, myBranch]
+spinnerText("Getting remote branch list")
 let branches = execProcess(
   r"git ls-remote | grep -v 'tags\|HEAD\|From\|/master\|/test\|dev\|release'"
 )
@@ -50,53 +46,37 @@ let branches = execProcess(
 .mapIt(it.split("\trefs/heads/"))
 .filterIt(it.len > 1)
 
-type
-  Branch = object
-    name: string
-    author: string
+var branchAuthorResult: seq[Branch] = @[]
 
-var result: seq[Branch] = @[]
-
-# Check if given remove branch contains this branch's latest commit hash
+spinnerText("Checking branches and commits")
 for branch in branches:
+  # get branches that has a commit with the same hash as the latest commit
   let branchExistsInMergedList: string = execProcess(
     "git branch -r --contains " & branch[0] & " | grep '" &
         remoteBranchToCheck & "$' | grep -vi 'head'"
   ).strip()
 
+  # Check if given remove branch contains this branch's latest commit hash
   if branchExistsInMergedList.len > 0 and branchExistsInMergedList == remoteBranchToCheck:
-    let currentBranchInfo = branchAuthors.filterIt(it[0] == branch[1])[0]
+    var currentBranchInfo = branchAuthors.filterIt(it[0] == branch[1])[0]
 
-    result.add(
+    # Check if the author is the given user
+    if userTocheck != "" and not currentBranchInfo[1].replaceUnicodeCharacters().toLower().contains(userTocheck):
+      continue
+
+    branchAuthorResult.add(
       Branch(
-        name: currentBranchInfo[0],
-        author: currentBranchInfo[1]
+        author: currentBranchInfo[1],
+        name: currentBranchInfo[0]
       )
     )
 
-# Initiate output table
-let outputTable = newTerminalTable()
-outputTable.separateRows = false
-outputTable.setHeaders(@["User", "Branch"])
-
-# Iterate over all branches sort by user and filter by user
-var exists: bool = false
-for r in result.sortedByIt(it.author.toLowerAscii):
-  if userTocheck != "" and not r.author.replaceUnicodeCharacters().toLower().contains(userTocheck):
-    continue
-
-  exists = true
-  outputTable.addRow(@[
-    r.author,
-    r.name
-  ])
-
-# No branch found
-if not exists:
-  spinner.success("Not found any branch that merged into " & remoteBranchToCheck)
+# No result
+if branchAuthorResult.len == 0:
+  spinnerSuccess("Not found any branch that merged into " & remoteBranchToCheck)
   quit(QuitSuccess)
 
-# echo table
-spinner.success("Branches that merged into " & remoteBranchToCheck & ":")
-printTable(outputTable)
+# Echo result
+spinnerSuccess("Branches that merged into " & remoteBranchToCheck & ":")
+printBranchesTable(branchAuthorResult)
 echo "To delete branch use: git push origin --delete [branchName]"
