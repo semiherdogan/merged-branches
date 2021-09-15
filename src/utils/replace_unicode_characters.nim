@@ -6,7 +6,7 @@ proc replaceUnicodeCharacters*(str: string): string =
   const replace: string = "ugiscoUGISCO"
 
   var strResult: string = str
-  for k in 0..(find.runeLen-1):
+  for k in 0..<find.runeLen:
     strResult = strResult.replace(
       find.runeAtPos(k).toUTF8(),
       replace.runeAtPos(k).toUTF8()
