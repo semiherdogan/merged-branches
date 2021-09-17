@@ -33,6 +33,9 @@ Example: merged-branches main myuser
 $ merged-branches --version
 ```
 
+## Todo
+* [ ] Add platform info into version example: "Version: 0.3.0-macos-arm64"
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
