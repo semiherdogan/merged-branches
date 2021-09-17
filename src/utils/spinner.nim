@@ -1,7 +1,7 @@
-from spinny import newSpinny, setSymbolColor, start, error, success, stop, setText, Dots,
+from spinny import newSpinny, setSymbolColor, start, error, success, stop, setText, SpinnerKind,
     fgLightGreen, fgGreen
 
-let spinner = newSpinny("Loading..".fgLightGreen, Dots)
+let spinner = newSpinny("Loading..".fgLightGreen, SpinnerKind.Flip)
 spinner.setSymbolColor(fgGreen)
 
 proc spinnerStart*(): void =

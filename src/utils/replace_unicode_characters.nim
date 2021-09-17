@@ -1,7 +1,7 @@
 from unicode import runeLen, runeAtPos, toUTF8
 from strutils import replace
 
-proc replaceUnicodeCharacters*(str: string): string =
+proc replaceUnicodeChars*(str: string): string =
   const find: string = "üğışçöÜĞİŞÇÖ"
   const replace: string = "ugiscoUGISCO"
 

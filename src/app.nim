@@ -2,7 +2,7 @@ from strutils import split, strip, toLower, contains
 from sequtils import mapIt, filterIt
 from osproc import execProcess
 from os import dirExists, paramCount, paramStr
-from utils/replace_unicode_characters import replaceUnicodeCharacters
+from utils/replace_unicode_characters import replaceUnicodeChars
 from utils/spinner import spinnerStart, spinnerSuccess, spinnerError, spinnerText
 from utils/table import printBranchesTable, Branch
 from utils/arg_parser import parseArgs
@@ -24,7 +24,7 @@ if paramCount() > 0:
 # get username as second argument
 var userTocheck = ""
 if paramCount() > 1:
-  userTocheck = paramStr(2).replaceUnicodeCharacters().toLower()
+  userTocheck = paramStr(2).replaceUnicodeChars().toLower()
 
 spinnerText("Running 'git fetch'")
 discard execProcess("git fetch -qp")
@@ -65,7 +65,7 @@ for branch in branches:
     var currentBranchInfo = branchAuthors.filterIt(it[0] == branch[1])[0]
 
     # Check if the author is the given user
-    if userTocheck != "" and not currentBranchInfo[1].replaceUnicodeCharacters().toLower().contains(userTocheck):
+    if userTocheck != "" and not currentBranchInfo[1].replaceUnicodeChars().toLower().contains(userTocheck):
       continue
 
     branchAuthorResult.add(

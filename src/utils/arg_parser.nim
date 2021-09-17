@@ -1,4 +1,4 @@
-from ../../constants import VERSION
+from parsecfg import loadConfig, Config, getSectionValue
 
 proc printHelp(): void =
   echo """Usage: merged-branches [branch] [user]
@@ -9,8 +9,11 @@ Example: merged-branches main myuser
 """
 
 proc printVersion(): void =
-  echo "Version: ", VERSION
-  echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", VERSION
+  let packageConfig: Config = loadConfig("app.nimble")
+  let appVersion = packageConfig.getSectionValue("", "version")
+
+  echo "Version: ", appVersion
+  echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", appVersion
 
 proc parseArgs*(argv: string): void =
   if argv == "--help":
