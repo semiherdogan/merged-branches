@@ -5,7 +5,10 @@ from os import dirExists, paramCount, paramStr
 from utils/replace_unicode_characters import replaceUnicodeCharacters
 from utils/spinner import spinnerStart, spinnerSuccess, spinnerError, spinnerText
 from utils/table import printBranchesTable, Branch
-from utils/arg_parser import parseArgv
+from utils/arg_parser import parseArgs
+
+if paramCount() > 0:
+  parseArgs(paramStr(1))
 
 spinnerStart()
 
@@ -16,12 +19,12 @@ if dirExists(".git/") == false:
 # get branch name as first argument
 var remoteBranchToCheck: string = "origin/master"
 if paramCount() > 0:
-  remoteBranchToCheck = "origin/" & parseArgv(paramStr(1))
+  remoteBranchToCheck = "origin/" & paramStr(1)
 
 # get username as second argument
 var userTocheck = ""
 if paramCount() > 1:
-  userTocheck = parseArgv(paramStr(2)).replaceUnicodeCharacters().toLower()
+  userTocheck = paramStr(2).replaceUnicodeCharacters().toLower()
 
 spinnerText("Running 'git fetch'")
 discard execProcess("git fetch -qp")

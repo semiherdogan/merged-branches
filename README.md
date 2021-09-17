@@ -14,7 +14,23 @@ __NOTE__: Before install this package, you should have `git` and `grep` installe
 
 * To see list of branches that merged into main branch and not deleted use example below:
 ```
-merged-branches main
+$ merged-branches main
+```
+
+* Give `--help` to get help string.
+```
+$ merged-branches --help
+
+Usage: merged-branches [branch] [user]
+  [branch] Branch to check merge. (Default: master)
+  [user]   Branch last committer.
+
+Example: merged-branches main myuser
+```
+
+* Give `--version` to get app version.
+```
+$ merged-branches --version
 ```
 
 ## License
