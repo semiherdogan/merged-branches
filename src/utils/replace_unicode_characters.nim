@@ -5,11 +5,9 @@ proc replaceUnicodeChars*(str: string): string =
   const find: string = "üğışçöÜĞİŞÇÖ"
   const replace: string = "ugiscoUGISCO"
 
-  var strResult: string = str
+  result = str
   for k in 0..<find.runeLen:
-    strResult = strResult.replace(
+    result = result.replace(
       find.runeAtPos(k).toUTF8(),
       replace.runeAtPos(k).toUTF8()
     )
-
-  return strResult
