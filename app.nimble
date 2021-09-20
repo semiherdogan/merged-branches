@@ -1,6 +1,6 @@
 # Package
 
-version         = "0.3.1"
+version         = "0.0.0"
 author          = "Semih ERDOGAN"
 description     = "Get merged branch list"
 license         = "MIT"

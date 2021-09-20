@@ -17,15 +17,20 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
+          # - ubuntu-latest
           # - windows-latest
-          # - macOS-latest
+          - macOS-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - uses: jiro4989/setup-nim-action@v1
         with:
           nim-version: ${{ env.NIM_VERSION }}
-      - run: nimble build -Y --verbose
+      - run: |
+          sed -i -E 's/version.*/version = "${{ env.RELEASE_VERSION }}"/g' app.nimble
+          cat app.nimble
+          nimble build -Y --verbose
       - name: Create artifact
         run: |
           assets="${{ env.APP_NAME }}_$(echo "${{ runner.os }}" | tr '[:upper:]' '[:lower:]')"
