@@ -21,11 +21,21 @@ $ merged-branches main
 ```
 $ merged-branches --help
 
-Usage: merged-branches [branch] [user]
-  [branch] Branch to check merge. (Default: master)
-  [user]   Branch last committer.
+"merged-branches" shows merged branches for given branch.
 
-Example: merged-branches main myuser
+Usage:
+    merged-branches [branch] [user]
+    merged-branches (-h | --help)
+    merged-branches (-v | --version)
+
+Options:
+    -h, --help           Print this help
+    -v, --version        Print this version
+    [branch]             Branch to check merge (Default: master)
+    [user]               Branch last committer (Default: "")
+
+Example:
+    merged-branches main myuser
 ```
 
 * `--version` to get app version.
