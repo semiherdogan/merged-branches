@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
-nimble build -d:release &&
-    mv merged-branches dist/merged-branches &&
-    ./dist/merged-branches $@
+nim --run compile src/app \
+    --threads:on \
+    --opt:speed \
+    --verbosity:0 \
+    --backend:objc \
+    -o:merged-branches \
+    --styleCheck:hint \
+    $@
