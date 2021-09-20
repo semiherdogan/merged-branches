@@ -5,6 +5,7 @@ nim --run compile src/app \
     --opt:speed \
     --verbosity:0 \
     --backend:objc \
-    -o:merged-branches \
     --styleCheck:hint \
     $@
+
+rm src/app
