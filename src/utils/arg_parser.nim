@@ -1,22 +1,42 @@
 from ../../constants import TAG, PLATFORM
+from os import commandLineParams
+from parseopt import initOptParser, getopt, cmdLongOption, cmdShortOption
 
 proc printHelp(): void =
-  echo """Usage: merged-branches [branch] [user]
-  [branch] Branch to check merge. (Default: master)
-  [user]   Branch last committer.
+  echo """
+"merged-branches" shows merged branches for given branch.
 
-Example: merged-branches main myuser
-"""
+Usage:
+    merged-branches [branch] [user]
+    merged-branches (-h | --help)
+    merged-branches (-v | --version)
+
+Options:
+    -h, --help           Print this help
+    -v, --version        Print this version
+    [branch]             Branch to check merge (Default: master)
+    [user]               Branch last committer (Default: "")
+
+Example:
+    merged-branches main myuser
+  """
+
 
 proc printVersion(): void =
   echo "Version: ", TAG, "-", PLATFORM
   echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", TAG
 
 proc parseArgs*(argv: string): void =
-  if argv == "--help" or argv == "-h":
-    printHelp()
-    quit(QuitSuccess)
+  var optParser = initOptParser(commandLineParams())
 
-  if argv == "--version" or argv == "-v":
-    printVersion()
-    quit(QuitSuccess)
+  for kind, key, val in optParser.getopt():
+    case kind
+    of cmdLongOption, cmdShortOption:
+      case key
+      of "help", "h":
+        printHelp()
+        quit(QuitSuccess)
+      of "version", "v":
+        printVersion()
+        quit(QuitSuccess)
+    else: discard
