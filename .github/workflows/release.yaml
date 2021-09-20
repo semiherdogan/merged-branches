@@ -30,7 +30,7 @@ jobs:
       - run: |
           sed -i -E 's/const TAG.*/const TAG* = "${{ env.RELEASE_TAG }}"/g' constants.nim
           sed -i -E 's/const PLATFORM.*/const PLATFORM* = "${{ runner.os }}"/g' constants.nim
-          cat version.cfg
+          cat constants.nim
           nimble build -Y --verbose
       - name: Create artifact
         run: |
