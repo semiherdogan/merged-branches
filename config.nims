@@ -2,3 +2,4 @@
 --app:console
 --d:release
 --opt:size
+--hints:off
