@@ -9,17 +9,18 @@ Example: merged-branches main myuser
 """
 
 proc printVersion(): void =
-  let packageConfig: Config = loadConfig("app.nimble")
-  let appVersion = packageConfig.getSectionValue("", "version")
+  let packageConfig: Config = loadConfig("version.cfg")
+  let tag = packageConfig.getSectionValue("", "tag")
+  let platform = packageConfig.getSectionValue("", "platform")
 
-  echo "Version: ", appVersion
-  echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", appVersion
+  echo "Version: ", tag, "-", platform
+  echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", tag
 
 proc parseArgs*(argv: string): void =
-  if argv == "--help":
+  if argv == "--help" or argv == "-h":
     printHelp()
     quit(QuitSuccess)
 
-  if argv == "--version":
+  if argv == "--version" or argv == "-v":
     printVersion()
     quit(QuitSuccess)
