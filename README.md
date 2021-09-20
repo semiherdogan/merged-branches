@@ -17,7 +17,7 @@ __NOTE__: Before install this package, you should have `git` and `grep` installe
 $ merged-branches main
 ```
 
-* Give `--help` to get help string.
+* `--help` to get help string.
 ```
 $ merged-branches --help
 
@@ -28,13 +28,13 @@ Usage: merged-branches [branch] [user]
 Example: merged-branches main myuser
 ```
 
-* Give `--version` to get app version.
+* `--version` to get app version.
 ```
 $ merged-branches --version
-```
 
-## Todo
-* [ ] Add platform info into version example: "Version: 0.3.0-macos-arm64"
+Version: 0.4.2-macOS
+Release link: https://github.com/semiherdogan/merged-branches/releases/tag/0.4.2
+```
 
 ## License
 
