@@ -1,0 +1,4 @@
+--threads:on
+--app:console
+--d:release
+--opt:size
