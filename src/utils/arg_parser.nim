@@ -1,4 +1,4 @@
-from parsecfg import loadConfig, Config, getSectionValue
+from ../../constants import TAG, PLATFORM
 
 proc printHelp(): void =
   echo """Usage: merged-branches [branch] [user]
@@ -9,12 +9,8 @@ Example: merged-branches main myuser
 """
 
 proc printVersion(): void =
-  let packageConfig: Config = loadConfig("version.cfg")
-  let tag = packageConfig.getSectionValue("", "tag")
-  let platform = packageConfig.getSectionValue("", "platform")
-
-  echo "Version: ", tag, "-", platform
-  echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", tag
+  echo "Version: ", TAG, "-", PLATFORM
+  echo "Release link: https://github.com/semiherdogan/merged-branches/releases/tag/", TAG
 
 proc parseArgs*(argv: string): void =
   if argv == "--help" or argv == "-h":

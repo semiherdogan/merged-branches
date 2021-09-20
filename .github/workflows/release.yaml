@@ -28,8 +28,8 @@ jobs:
         with:
           nim-version: ${{ env.NIM_VERSION }}
       - run: |
-          sed -i -E 's/tag.*/tag = "${{ env.RELEASE_TAG }}"/g' version.cfg
-          sed -i -E 's/platform.*/platform = "${{ runner.os }}"/g' version.cfg
+          sed -i -E 's/const TAG.*/const TAG* = "${{ env.RELEASE_TAG }}"/g' constants.nim
+          sed -i -E 's/const PLATFORM.*/const PLATFORM* = "${{ runner.os }}"/g' constants.nim
           cat version.cfg
           nimble build -Y --verbose
       - name: Create artifact
