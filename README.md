@@ -42,8 +42,8 @@ Example:
 ```
 $ merged-branches --version
 
-Version: 0.4.2-macOS
-Release link: https://github.com/semiherdogan/merged-branches/releases/tag/0.4.2
+Version: 1.0.0-macOS
+Release link: https://github.com/semiherdogan/merged-branches/releases/tag/1.0.0
 ```
 
 ## License
