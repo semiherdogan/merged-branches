@@ -19,4 +19,4 @@
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The MIT License (MIT). Please see [License](LICENSE) file for more information.
