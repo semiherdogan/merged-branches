@@ -14,7 +14,7 @@
 
 - `--help` to print help.
 - `--version` to print app version.
-- `[branch]` branch to check (optional)
+- `[branch]` branch to check (default: `master`)
 - `[user]` user to filter (optional)
 
 ## License
