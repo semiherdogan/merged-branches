@@ -32,10 +32,13 @@ func GetBranches(branchToCheck string) (branchesResult []Branch) {
 
 	for i := range branches {
 		var parsed []string = strings.Split(branches[i], "\trefs/heads/")
-		branchesResult = append(branchesResult, Branch{
-			hash:   parsed[0],
-			branch: parsed[1],
-		})
+
+		if len(parsed) > 1 {
+			branchesResult = append(branchesResult, Branch{
+				hash:   parsed[0],
+				branch: parsed[1],
+			})
+		}
 	}
 
 	return
