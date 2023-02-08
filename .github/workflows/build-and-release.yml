@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           artifacts: "${{ env.APP_NAME }}_*"
-          body: "Release"
+          body: ""
           draft: false
           generateReleaseNotes: true
 
