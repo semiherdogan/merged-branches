@@ -7,7 +7,7 @@ on:
 
 env:
   APP_NAME: 'merged-branches'
-  GO_VERSION: '1.19.1'
+  GO_VERSION: '1.20.2'
 
 jobs:
   build-artifact:
