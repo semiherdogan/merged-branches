@@ -23,13 +23,11 @@ func main() {
 
 	if Contains(args, "--help") || Contains(args, "-h") || Contains(args, "help") {
 		PrintHelp(AppName, Version, Platform)
-
 		os.Exit(0)
 	}
 
 	if Contains(args, "--version") || Contains(args, "-v") || Contains(args, "version") {
 		Log(AppName, Version+"-"+Platform)
-
 		os.Exit(0)
 	}
 
@@ -51,7 +49,7 @@ func main() {
 	}
 
 	SpinnerUpdate("Running git fetch...")
-	_, _ = RunCMD("git", []string{"fetch", "-qp"})
+	_, _ = RunShellCommand("git", []string{"fetch", "-qp"})
 
 	var branches = GetMergedBranches(user, branchToCheck)
 
@@ -65,7 +63,7 @@ func main() {
 
 		PrintTable(tbl)
 
-		Log("\nTo delete branch use: git push origin --delete [branchName]")
+		Log("\nTo delete branch use: git push origin --delete <branch>")
 
 		os.Exit(0)
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 func HandleKeyboardInterrupt(cond func()) {
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 
 	go func() {
@@ -21,7 +21,7 @@ func HandleKeyboardInterrupt(cond func()) {
 	}()
 }
 
-func RunCMD(path string, args []string) (out string, err error) {
+func RunShellCommand(path string, args []string) (out string, err error) {
 	cmd := exec.Command(path, args...)
 
 	var b []byte
@@ -64,7 +64,9 @@ func Log(a ...any) {
 }
 
 func CheckGitFolder(cond func()) {
-	if _, err := os.Stat(".git/"); os.IsNotExist(err) {
+	_, err := os.Stat(".git/")
+
+	if os.IsNotExist(err) {
 		cond()
 	}
 }

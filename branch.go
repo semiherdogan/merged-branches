@@ -20,7 +20,7 @@ type BranchAuthor struct {
 
 func GetBranches(branchToCheck string) (branchesResult []Branch) {
 	//Getting remote branch list...
-	var output, _ = RunCMD("git", []string{"ls-remote"})
+	var output, _ = RunShellCommand("git", []string{"ls-remote"})
 
 	var branches []string = Filter(strings.Split(output, "\n"), func(s string) bool {
 		return len(s) > 0 &&
@@ -48,7 +48,7 @@ func GetBranchAndAuthors(user string) (branchAuthors []BranchAuthor) {
 	const divider string = "--X--X--"
 
 	// Getting branch and author info...
-	output, _ := RunCMD("git", []string{
+	output, _ := RunShellCommand("git", []string{
 		"for-each-ref",
 		fmt.Sprintf("--format=%%(authorname)%s%%(refname:strip=3)%s%%(committerdate)", divider, divider),
 		"--sort=committerdate",
@@ -84,7 +84,7 @@ func GetMergedBranches(user string, branchToCheck string) (branchAuthorResult []
 
 	SpinnerUpdate("Checking branches and commits...")
 	for _, branch := range branches {
-		var output, _ = RunCMD("git", []string{"branch", "-r", "--contains", branch.hash})
+		var output, _ = RunShellCommand("git", []string{"branch", "-r", "--contains", branch.hash})
 
 		var branchExistsInMergedList []string = Filter(strings.Split(output, "\n"), func(s string) bool {
 			return len(s) > 0 && !strings.Contains(s, "HEAD")
