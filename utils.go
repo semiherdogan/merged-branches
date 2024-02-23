@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
 	"os/signal"
+	"strings"
 
 	"github.com/fatih/color"
 	"github.com/mattn/go-runewidth"
@@ -82,4 +84,19 @@ func PrintTable(tbl table.Table) {
 	})
 
 	tbl.Print()
+}
+
+func GetUserInput(s string) (input string) {
+	fmt.Print(s)
+	reader := bufio.NewReader(os.Stdin)
+
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("An error occurred while reading input. Please try again", err)
+		os.Exit(1)
+	}
+
+	input = strings.TrimSuffix(input, "\n")
+
+	return
 }

@@ -36,12 +36,14 @@ func main() {
 		os.Exit(1)
 	})
 
-	SpinnerStart()
-
-	branchToCheck := "master"
+	branchToCheck := ""
 	if len(args) > 0 {
 		branchToCheck = args[0]
+	} else {
+		branchToCheck = GetUserInput("Merged to?: ")
 	}
+
+	SpinnerStart()
 
 	user := ""
 	if len(args) > 1 {
