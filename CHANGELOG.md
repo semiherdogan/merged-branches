@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 --
 
+## 0.2.1 (2024-02-23)
+### Added
+- Ask user input if branch is not given
+
 ## 0.2.0 (2023-02-03)
 ### Fixed
 - Fixed parsed string length error in `parsed`.
