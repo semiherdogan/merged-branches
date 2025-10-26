@@ -1,1 +1,7 @@
-/.vscode/
+.DS_Store
+
+./merged-branches-darwin
+./merged-branches-linux
+./merged-branches-windows.exe
+
+
